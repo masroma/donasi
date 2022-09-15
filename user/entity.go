@@ -13,3 +13,7 @@ type User struct {
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }
+
+// handler
+// service
+// repocitory

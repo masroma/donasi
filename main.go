@@ -2,7 +2,6 @@ package main
 
 import (
 	"donasi/user"
-	"fmt"
 	"log"
 
 	"gorm.io/driver/mysql"
@@ -10,7 +9,7 @@ import (
 )
 
 func main() {
-	// setting connection database
+
 	dsn := "root:@tcp(127.0.0.1:3306)/donasi?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
@@ -18,20 +17,14 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	fmt.Println("connection database succesfully")
+	userRepository := user.NewRepository(db)
+	userService := user.NewService(userRepository)
 
-	var users []user.User
-	length := len(users)
-	fmt.Println(length)
-
-	db.Find(&users)
-
-	length = len(users)
-	fmt.Println(length)
-
-	for _, user := range users {
-		fmt.Println(user.Name)
-		fmt.Println(user.Email)
-	}
+	userInput := user.RegisterUserInput{}
+	userInput.Name = "te sinputy"
+	userInput.Email = "contoh@gmaik.com"
+	userInput.Occupation = "PNS"
+	userInput.Password = "password"
+	userService.RegisterUser(userInput)
 
 }
